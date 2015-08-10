@@ -24,8 +24,6 @@ function teamtalk_setup() {
 	 */
 	load_theme_textdomain( 'teamtalk', get_template_directory() . '/languages' );
 
-	// Add default posts and comments RSS feed links to head.
-	add_theme_support( 'automatic-feed-links' );
 
 	/*
 	 * Let WordPress manage the document title.
@@ -42,10 +40,7 @@ function teamtalk_setup() {
 	 */
 	add_theme_support( 'post-thumbnails' );
 
-	// This theme uses wp_nav_menu() in one location.
-	register_nav_menus( array(
-		'primary' => esc_html__( 'Primary Menu', 'teamtalk' ),
-	) );
+
 
 	/*
 	 * Switch default core markup for search form, comment form, and comments
@@ -59,38 +54,11 @@ function teamtalk_setup() {
 		'caption',
 	) );
 
-	/*
-	 * Enable support for Post Formats.
-	 * See https://developer.wordpress.org/themes/functionality/post-formats/
-	 */
-	add_theme_support( 'post-formats', array(
-		'aside',
-		'image',
-		'video',
-		'quote',
-		'link',
-	) );
-
-	// Set up the WordPress core custom background feature.
-	add_theme_support( 'custom-background', apply_filters( 'teamtalk_custom_background_args', array(
-		'default-color' => 'ffffff',
-		'default-image' => '',
-	) ) );
 }
 endif; // teamtalk_setup
 add_action( 'after_setup_theme', 'teamtalk_setup' );
 
-/**
- * Set the content width in pixels, based on the theme's design and stylesheet.
- *
- * Priority 0 to make it available to lower priority callbacks.
- *
- * @global int $content_width
- */
-function teamtalk_content_width() {
-	$GLOBALS['content_width'] = apply_filters( 'teamtalk_content_width', 640 );
-}
-add_action( 'after_setup_theme', 'teamtalk_content_width', 0 );
+
 
 /**
  * Register widget area.
@@ -116,8 +84,6 @@ add_action( 'widgets_init', 'teamtalk_widgets_init' );
 function teamtalk_scripts() {
 	wp_enqueue_style( 'teamtalk-style', get_stylesheet_uri() );
 
-	wp_enqueue_script( 'teamtalk-navigation', get_template_directory_uri() . '/js/navigation.js', array(), '20120206', true );
-
 	wp_enqueue_script( 'teamtalk-skip-link-focus-fix', get_template_directory_uri() . '/js/skip-link-focus-fix.js', array(), '20130115', true );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
@@ -126,10 +92,6 @@ function teamtalk_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'teamtalk_scripts' );
 
-/**
- * Implement the Custom Header feature.
- */
-require get_template_directory() . '/inc/custom-header.php';
 
 /**
  * Custom template tags for this theme.
@@ -145,8 +107,3 @@ require get_template_directory() . '/inc/extras.php';
  * Customizer additions.
  */
 require get_template_directory() . '/inc/customizer.php';
-
-/**
- * Load Jetpack compatibility file.
- */
-require get_template_directory() . '/inc/jetpack.php';
